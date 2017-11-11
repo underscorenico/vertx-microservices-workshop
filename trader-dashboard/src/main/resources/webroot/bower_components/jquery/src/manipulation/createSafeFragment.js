@@ -1,20 +1,20 @@
-define( [
+define([
 	"./var/nodeNames"
-], function( nodeNames ) {
+], function (nodeNames) {
 
-function createSafeFragment( document ) {
-	var list = nodeNames.split( "|" ),
-		safeFrag = document.createDocumentFragment();
+	function createSafeFragment(document) {
+		var list = nodeNames.split("|"),
+			safeFrag = document.createDocumentFragment();
 
-	if ( safeFrag.createElement ) {
-		while ( list.length ) {
-			safeFrag.createElement(
-				list.pop()
-			);
+		if (safeFrag.createElement) {
+			while (list.length) {
+				safeFrag.createElement(
+					list.pop()
+				);
+			}
 		}
+		return safeFrag;
 	}
-	return safeFrag;
-}
 
-return createSafeFragment;
-} );
+	return createSafeFragment;
+});

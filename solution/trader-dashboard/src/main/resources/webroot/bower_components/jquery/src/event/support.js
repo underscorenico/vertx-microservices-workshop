@@ -1,9 +1,9 @@
-define( [
+define([
 	"../var/support"
-], function( support ) {
+], function (support) {
 
-support.focusin = "onfocusin" in window;
+	support.focusin = "onfocusin" in window;
 
-return support;
+	return support;
 
-} );
+});

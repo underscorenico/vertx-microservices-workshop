@@ -6,12 +6,12 @@ var
 	// Map over the $ in case of overwrite
 	_$ = window.$;
 
-jQuery.noConflict = function( deep ) {
-	if ( window.$ === jQuery ) {
+jQuery.noConflict = function (deep) {
+	if (window.$ === jQuery) {
 		window.$ = _$;
 	}
 
-	if ( deep && window.jQuery === jQuery ) {
+	if (deep && window.jQuery === jQuery) {
 		window.jQuery = _jQuery;
 	}
 
@@ -21,6 +21,6 @@ jQuery.noConflict = function( deep ) {
 // Expose jQuery and $ identifiers, even in AMD
 // (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
 // and CommonJS for browser emulators (#13566)
-if ( !noGlobal ) {
+if (!noGlobal) {
 	window.jQuery = window.$ = jQuery;
 }

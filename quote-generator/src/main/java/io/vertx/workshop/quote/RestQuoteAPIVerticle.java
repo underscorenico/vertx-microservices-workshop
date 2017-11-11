@@ -15,44 +15,44 @@ import java.util.Map;
  */
 public class RestQuoteAPIVerticle extends AbstractVerticle {
 
-  private Map<String, JsonObject> quotes = new HashMap<>();
+	private Map<String, JsonObject> quotes = new HashMap<>();
 
-  @Override
-  public void start() throws Exception {
-    vertx.eventBus().<JsonObject>consumer(GeneratorConfigVerticle.ADDRESS)
-        .handler(message -> {
-            JsonObject quote = message.body();
-            quotes.put(quote.getString("name"), quote);
-        });
+	@Override
+	public void start() throws Exception {
+		vertx.eventBus().<JsonObject>consumer(GeneratorConfigVerticle.ADDRESS)
+			.handler(message -> {
+				JsonObject quote = message.body();
+				quotes.put(quote.getString("name"), quote);
+			});
 
 
-    vertx.createHttpServer()
-        .requestHandler(request -> {
-          HttpServerResponse response = request.response()
-              .putHeader("content-type", "application/json");
+		vertx.createHttpServer()
+			.requestHandler(request -> {
+				HttpServerResponse response = request.response()
+					.putHeader("content-type", "application/json");
 
-            String company = request.getParam("name");
-            if (company == null) {
-                
-                String content = Json.encodePrettily(quotes);
-                response
-                        .end(content);
-            } else {
+				String company = request.getParam("name");
+				if (company == null) {
 
-                JsonObject quote = quotes.get(company);
-                if (quote == null) {
-                    response.setStatusCode(404).end();
-                } else {
-                    response.end(quote.encodePrettily());
-                }
-            }
-        })
-        .listen(config().getInteger("http.port"), ar -> {
-          if (ar.succeeded()) {
-            System.out.println("Server started");
-          } else {
-            System.out.println("Cannot start the server: " + ar.cause());
-          }
-        });
-  }
+					String content = Json.encodePrettily(quotes);
+					response
+						.end(content);
+				} else {
+
+					JsonObject quote = quotes.get(company);
+					if (quote == null) {
+						response.setStatusCode(404).end();
+					} else {
+						response.end(quote.encodePrettily());
+					}
+				}
+			})
+			.listen(config().getInteger("http.port"), ar -> {
+				if (ar.succeeded()) {
+					System.out.println("Server started");
+				} else {
+					System.out.println("Cannot start the server: " + ar.cause());
+				}
+			});
+	}
 }
